@@ -20,7 +20,7 @@ class HotelServices {
 
      //TO FETCH ROOMS BY ID
     async fetchRoom(id:string){
-        return await Room.find({_id: id})
+        return await Room.findById({_id: id})
     }
 
     //TO EDIT ROOMS

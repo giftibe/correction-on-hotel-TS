@@ -2,10 +2,9 @@
   "name": "ts-hotel-api",
   "version": "1.0.0",
   "description": "Hotel api with TypeScript",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "build":"npm install && tsc",
-    "start":"node ./build/index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Gift",

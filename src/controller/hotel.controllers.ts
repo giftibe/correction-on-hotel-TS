@@ -68,20 +68,21 @@ class HotelController{
 
         //check if room to delete exist
         const existingRoom = await HotelServices.fetchRoom(id)
-        if(!existingRoom){
-            res.status(500)
-            .send({
-                message: 'Room does not exit',
-                success: false 
-            });
-        }
-
-        await HotelServices.deleteRoom(id)
-        res.status(201)
-            .send({
-                message: MESSAGES.DELETED,
-                success: true,
-            });   
+            if(existingRoom){
+                await HotelServices.deleteRoom(req.params.id)
+                res.status(201)
+                .send({
+                    message: MESSAGES.DELETED,
+                    success: true,
+                }); 
+            }
+            if(!existingRoom){
+                res.status(500)
+                .send({
+                    message: 'Room does not exit',
+                    success: false 
+                });
+            }        
         }    
         catch (err) {
             res.status(500)
@@ -90,27 +91,28 @@ class HotelController{
     }
     
 
-    //Fetch rooms
+    //Fetch room
     async fetchARoom(req:Request, res:Response){
         try{
-        const {id} = req.params
+            const {id} = req.params
 
-        //check if the room to fetch exists
-        const existingRoom = await HotelServices.fetchRoom(id)
-        if(!existingRoom){
-            res.status(500)
-            .send({
-                message: 'Room does not exit',
-                success: false 
-            });
-        }
-
-        res.status(201)
-            .send({
-                message: MESSAGES.FETCHED,
-                success: true,
-                existingRoom
-            }); 
+            //check if the room to fetch exists
+            const existingRoom = await HotelServices.fetchRoom(id)
+            if(existingRoom){
+                res.status(201)
+                    .send({
+                        message: MESSAGES.FETCHED,
+                        success: true,
+                        existingRoom
+                    }); 
+                }
+                else{
+                res.status(500)
+                .send({
+                    message: 'Room does not exit',
+                    success: false 
+                });
+            }
         }
         catch (err) {
             res.status(500)

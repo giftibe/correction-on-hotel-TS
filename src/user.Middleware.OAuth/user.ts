@@ -4,8 +4,8 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 import bcrypt from 'bcrypt'
 import {RoomTypes, Room, Users} from '../models/roomModel'
-import mongoose from 'mongoose'
-import {IHotel} from '../interfaces/hotel.interfaces'
+// import mongoose from 'mongoose'
+// import {IHotel} from '../interfaces/hotel.interfaces'
 
 
 
@@ -67,18 +67,17 @@ async signupUser(req:Request, res:Response){
         const checkUsers = await Users.findOne({email})
 
         
-        if(checkUsers == null){ 
-            res.status(500)
-            .json({ message: MESSAGES.REGISTER, success: false });
-        }
-        
+        if(!checkUsers){ 
+            res.status(500).send({ message: MESSAGES.REGISTER, success: false });
+        }else{
         const checkUserspassword = String(await Users.findOne({password}))
         bcrypt.compare(password, checkUserspassword);
             res.status(403)
-            .json({
+            .send({
             success: true,
             message: MESSAGES.LOGIN,
             checkUsers})
+        }
     }
 }
 export default new User()
